@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.36" id="StudentsSearchPageDef"
+                Package="com.pinnacol.view.pageDefs">
+  <parameters/>
+  <executables>
+    <iterator Binds="root" RangeSize="25" DataControl="CourseClient" id="CourseClientIterator"/>
+    <accessorIterator MasterBinding="CourseClientIterator" Binds="courseList" RangeSize="25" DataControl="CourseClient"
+                      BeanClass="com.pinnacol.model.Course" id="courseListIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="courseListIterator" id="courseList">
+      <nodeDefinition DefName="com.pinnacol.model.Course" Name="courseList0">
+        <AttrNames>
+          <Item Value="courseNumber"/>
+          <Item Value="credits"/>
+          <Item Value="id"/>
+          <Item Value="instructor"/>
+          <Item Value="name"/>
+          <Item Value="schedule"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

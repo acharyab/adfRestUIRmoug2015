@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.1.3.2.36" id="DataBindings"
+             SeparateXMLFiles="false" Package="com.pinnacol.view" ClientType="Generic">
+  <pageMap>
+    <page path="/StudentsSearch.jsf" usageId="com_pinnacol_view_StudentsSearchPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="com_pinnacol_view_StudentsSearchPageDef" path="com.pinnacol.view.pageDefs.StudentsSearchPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="CourseClient" path="com.pinnacol.model.CourseClient"/>
+  </dataControlUsages>
+</Application>

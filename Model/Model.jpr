@@ -61,10 +61,17 @@
       <string v="oracle.bm.commonIde.data.project.ModelerProjectSettings/modelersContentSet"/>
    </list>
    <value n="defaultPackage" v="com.pinnacol.model"/>
+   <hash n="oracle.adfdtinternal.model.ide.settings.ADFMSettings">
+      <value n="hasDataControls" v="true"/>
+   </hash>
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">
          <string v="ADFbc"/>
+         <string v="ADFm"/>
          <string v="Java"/>
+         <string v="WSDL"/>
+         <string v="WSPolicy"/>
+         <string v="WebServices"/>
          <string v="XML"/>
       </list>
    </hash>
@@ -122,6 +129,65 @@
    <hash n="oracle.jdeveloper.model.J2eeSettings">
       <value n="j2eeWebAppName" v="adfRestUIRmoug2015-Model-webapp"/>
       <value n="j2eeWebContextRoot" v="adfRestUIRmoug2015-Model-context-root"/>
+   </hash>
+   <hash n="oracle.jdeveloper.model.PathsConfiguration">
+      <hash n="javaContentSet">
+         <list n="constituent-sets">
+            <hash>
+               <url n="content-folder-url" path="adfmsrc/com/pinnacol/client/"/>
+               <list n="pattern-filters">
+                  <string v="+com/pinnacol/client/"/>
+               </list>
+               <list n="url-path">
+                  <url path="adfmsrc/"/>
+               </list>
+            </hash>
+         </list>
+         <list n="pattern-filters">
+            <string v="+**"/>
+         </list>
+         <list n="url-path">
+            <url path="src/"/>
+         </list>
+      </hash>
+   </hash>
+   <hash n="oracle.jdevimpl.config.JProjectLibraries">
+      <list n="exportedReferences">
+         <hash>
+            <value n="id" v="ADF Model Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="ADF Model Generic Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Oracle JDBC"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="JAX-WS Client"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+      </list>
+      <list n="libraryReferences">
+         <hash>
+            <value n="id" v="ADF Model Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="ADF Model Generic Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Oracle JDBC"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="JAX-WS Client"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+      </list>
    </hash>
    <hash n="oracle.jdevimpl.config.JProjectPaths">
       <url n="outputDirectory" path="classes/"/>

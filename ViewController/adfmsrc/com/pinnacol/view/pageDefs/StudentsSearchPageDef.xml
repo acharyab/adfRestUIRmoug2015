@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.36" id="StudentsSearchPageDef"
+                Package="com.pinnacol.view.pageDefs">
+  <parameters/>
+  <executables/>
+  <bindings/>
+</pageDefinition>

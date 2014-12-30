@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
     <af:document title="untitled2.jsf" id="d1">
+        <af:messages id="m1"/>
         <af:form id="f1">
             <af:panelGridLayout id="pgl1">
                 <af:gridRow marginTop="5px" height="auto" id="gr1">
