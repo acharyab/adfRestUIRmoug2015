@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="untitled2.jsf" id="d1">
+        <af:form id="f1">
+            <af:panelGridLayout id="pgl1">
+                <af:gridRow marginTop="5px" height="auto" id="gr1">
+                    <af:gridCell marginStart="5px" columnSpan="2" marginEnd="5px" id="gc1" halign="stretch">
+                        <af:panelBox text="Search" id="pb1" showDisclosure="false" background="medium">
+                            <f:facet name="toolbar"/>
+                        </af:panelBox>
+                    </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr2">
+                    <af:gridCell marginStart="5px" width="40%" id="gc2" halign="stretch">
+                        <af:panelBox text="Students enrolled in Course" id="pb2" showDisclosure="false"
+                                     background="light">
+                            <f:facet name="toolbar"/>
+                        </af:panelBox>
+                    </af:gridCell>
+                    <af:gridCell marginStart="5px" width="60%" marginEnd="5px" id="gc3" halign="stretch">
+                        <af:panelBox text="Student Details" id="pb3" showDisclosure="false" background="light">
+                            <f:facet name="toolbar"/>
+                        </af:panelBox>
+                    </af:gridCell>
+                </af:gridRow>
+            </af:panelGridLayout>
+        </af:form>
+    </af:document>
+</f:view>
