@@ -2,3 +2,10 @@ ViewController/classes/com/pinnacol/view/*.class
 Model/classes/com/pinnacol/client/*.class
 Model/classes/com/pinnacol/model/*.class
 Model/classes/com/pinnacol/client/*.class
+.adf/META-INF/adf-config.xml
+.data/00000000/00000000.jdb
+.data/00000000/je.lck
+.data/Model/00000000/00000000.jdb
+.data/Model/00000000/je.lck
+.data/ViewController/00000000/00000000.jdb
+.data/ViewController/00000000/je.lck
