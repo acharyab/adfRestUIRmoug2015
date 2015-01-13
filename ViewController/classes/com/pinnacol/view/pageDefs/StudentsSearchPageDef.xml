@@ -3,20 +3,29 @@
                 Package="com.pinnacol.view.pageDefs">
   <parameters/>
   <executables>
-    <iterator Binds="root" RangeSize="25" DataControl="CourseClient" id="CourseClientIterator"/>
-    <accessorIterator MasterBinding="CourseClientIterator" Binds="courseList" RangeSize="25" DataControl="CourseClient"
-                      BeanClass="com.pinnacol.model.Course" id="courseListIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="StudentCourseVwClient" id="StudentCourseVwClientIterator"/>
+    <accessorIterator MasterBinding="StudentCourseVwClientIterator" Binds="studentsForCourse" RangeSize="25"
+                      DataControl="StudentCourseVwClient" BeanClass="com.pinnacol.model.StudentCourseVw"
+                      id="studentsForCourseIterator"/>
+    <variableIterator id="variables">
+      <variable Type="java.math.BigDecimal" Name="ExecuteWithParams_courseId" IsQueriable="false"/>
+    </variableIterator>
   </executables>
   <bindings>
-    <tree IterBinding="courseListIterator" id="courseList">
-      <nodeDefinition DefName="com.pinnacol.model.Course" Name="courseList0">
+    <action IterBinding="studentsForCourseIterator" id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="courseId" NDType="java.math.BigDecimal" NDValue="${bindings.ExecuteWithParams_courseId}"/>
+    </action>
+    <attributeValues IterBinding="variables" id="courseId">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_courseId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="studentsForCourseIterator" id="studentsForCourse">
+      <nodeDefinition DefName="com.pinnacol.model.StudentCourseVw" Name="studentsForCourse0">
         <AttrNames>
-          <Item Value="courseNumber"/>
-          <Item Value="credits"/>
-          <Item Value="id"/>
-          <Item Value="instructor"/>
           <Item Value="name"/>
-          <Item Value="schedule"/>
+          <Item Value="studentId"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

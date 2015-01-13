@@ -8,6 +8,7 @@
     <page id="com_pinnacol_view_StudentsSearchPageDef" path="com.pinnacol.view.pageDefs.StudentsSearchPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
+    <dc id="StudentCourseVwClient" path="com.pinnacol.model.StudentCourseVwClient"/>
     <dc id="CourseClient" path="com.pinnacol.model.CourseClient"/>
   </dataControlUsages>
 </Application>
