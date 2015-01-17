@@ -8,58 +8,124 @@
             <af:panelGridLayout id="pgl1">
                 <af:gridRow marginTop="5px" height="auto" id="gr1">
                     <af:gridCell marginStart="5px" columnSpan="2" marginEnd="5px" id="gc1" halign="stretch">
-                        <af:panelBox text="Search" id="pb1" showDisclosure="false" background="medium">
+                        <af:panelBox id="pb1" showDisclosure="false" background="medium">
                             <f:facet name="toolbar"/>
-                            <af:panelFormLayout id="pfl1">
-                                <af:inputText label="Enter Course" id="it4"
+                            <af:panelGroupLayout id="pgl6" layout="horizontal" halign="center">
+                                <af:inputText id="it4"
                                               valueChangeListener="#{listenerBean.CourseChangeListener}"
-                                              binding="#{listenerBean.courseInputText}" columns="50" autoSubmit="true">
+                                              binding="#{listenerBean.courseInputText}" columns="50" autoSubmit="true"
+                                              placeholder="Search by Course"
+                                              inlineStyle="padding-bottom:40px; padding-top:20px;"
+                                              value="#{viewScope.courseName}">
                                     <af:autoSuggestBehavior suggestItems="#{autoSuggestBean.SuggestCourses}"/>
                                 </af:inputText>
-                            </af:panelFormLayout>
+                                <af:separator id="s5"/>
+                            </af:panelGroupLayout>
                         </af:panelBox>
                     </af:gridCell>
                 </af:gridRow>
+                <af:gridRow id="gr4" marginTop="5px">
+                    <af:gridCell id="gc7">
+                        <af:inputText id="it1" value="#{viewScope.searchMsg}" readOnly="true" binding="#{listenerBean.searchMsg}"
+                                      contentStyle="color:Red; font-size:large;"/>
+                    </af:gridCell>
+                    <af:gridCell id="gc8"/>
+                </af:gridRow>
                 <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr2">
-                    <af:gridCell marginStart="5px" width="40%" id="gc2" halign="stretch">
-                        <af:panelBox text="Students Enrolled in Course" id="pb2" showDisclosure="false"
-                                     background="light" inlineStyle="margin-top:0px; margin-bottom:0px;">
-                            <f:facet name="toolbar"/>
-                            <af:table value="#{bindings.studentsForCourse.collectionModel}" var="row"
-                                      rows="#{bindings.studentsForCourse.rangeSize}"
-                                      emptyText="#{bindings.studentsForCourse.viewable ? 'No data to display.' : 'Access Denied.'}"
-                                      rowBandingInterval="1" fetchSize="#{bindings.studentsForCourse.rangeSize}"
-                                      id="t1" rowSelection="single" horizontalGridVisible="false">
-                                <af:column headerText="Student Name" id="c1" width="300">
-                                    <af:outputText value="#{row.bindings.name.inputValue}"
-                                                   shortDesc="#{bindings.studentsForCourse.hints.name.tooltip}" id="it2"
-                                                   inlineStyle="border-radius:0px 0px 0px 0px / 0px 0px 0px 0px ; border-width:0px; outline-color:transparent; border-left-color:transparent; border-right-color:transparent; border-top-color:transparent; border-bottom-color:transparent;"/>
-                                </af:column>
-                                <af:column headerText="Student ID" id="c2" width="100">
-                                    <af:outputText value="#{row.bindings.studentId.inputValue}"
-                                                   shortDesc="#{bindings.studentsForCourse.hints.studentId.tooltip}"
-                                                   id="it3">
-                                        <af:convertNumber groupingUsed="false"
-                                                          pattern="#{bindings.studentsForCourse.hints.studentId.format}"/>
-                                    </af:outputText>
-                                </af:column>
-                                <af:column id="c7" width="50" displayIndex="-1" minimumWidth="20" headerText="Remove">
-                                        <af:panelGroupLayout id="pgl6" layout="horizontal" halign="center">
-                                        <af:button id="b2" icon="#{resource['images:delete1.png']}"
-                                                       immediate="true"/>
-                                        </af:panelGroupLayout>
-                                </af:column>
-                            </af:table>
-                            <af:button text="Add Student" id="b1" inlineStyle="padding-top:0px; margin-top:5px;"/>
+                    <af:gridCell marginStart="5px" width="40%" id="gc2" halign="stretch" valign="stretch">
+                        <af:panelBox id="pb2" showDisclosure="false"
+                                     background="light" inlineStyle="margin-top:20px; margin-bottom:0px;"
+                                     partialTriggers="it4">
+                            <f:facet name="toolbar">
+                                <af:button text="Enroll Student" id="b1" inlineStyle="padding-top:0px; margin-top:10px;"
+                                           styleClass="AFAppNavbarButton"/>
+                            </f:facet>
+                            <af:listView value="#{bindings.studentsForCourse.collectionModel}" var="item"
+                                         emptyText="#{bindings.studentsForCourse.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                         fetchSize="#{bindings.studentsForCourse.rangeSize}" id="lv1"
+                                         selectionListener="#{bindings.studentsForCourse.collectionModel.makeCurrent}"
+                                         selection="single">
+                                <af:listItem id="li1">
+                                    <af:panelGridLayout id="pgl5">
+                                        <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr3">
+                                            <af:gridCell marginStart="5px" width="60%" id="gc4">
+                                                <af:outputFormatted value="#{item.bindings.name.inputValue}" id="of1"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="25%" id="gc5">
+                                                <af:outputFormatted value="#{item.bindings.id.inputValue}" id="of2">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.studentsForCourse.hints.id.format}"/>
+                                                </af:outputFormatted>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="15%" marginEnd="5px" id="gc6"
+                                                         halign="end">
+                                                <af:button id="b2" icon="#{resource['images:delete1.png']}"
+                                                           styleClass="AFAppNavButton" immediate="true"/>
+                                            </af:gridCell>
+                                        </af:gridRow>
+                                    </af:panelGridLayout>
+                                </af:listItem>
+                            </af:listView>
                         </af:panelBox>
                     </af:gridCell>
                     <af:gridCell marginStart="5px" width="60%" marginEnd="5px" id="gc3" halign="stretch">
-                        <af:panelBox text="Student Details" id="pb3" showDisclosure="false" background="light">
+                        <af:panelBox text="#{bindings.name.inputValue}" id="pb3" showDisclosure="false" background="light"
+                                     inlineStyle="margin-top:20px;">
                             <f:facet name="toolbar"/>
+                            <af:panelGroupLayout id="pgl4" layout="horizontal" valign="top">
+                                <af:panelGroupLayout id="pgl2" valign="top" layout="vertical">
+                                    <af:image source="/images/#{bindings.name.inputValue}.jpg"
+                                              shortDesc="#{bindings.name.inputValue}" id="i1" inlineStyle="padding-left:20px; padding-top:20px;"/>
+                                </af:panelGroupLayout>
+                                <af:panelGroupLayout id="pgl3" valign="top" halign="center" layout="vertical">
+                                    <af:panelFormLayout id="pfl3" labelAlignment="start"
+                                                        inlineStyle="padding-left:80px;">
+                                        <f:facet name="footer"/>
+                                        <af:inputDate value="#{bindings.dob.inputValue}"
+                                                      label="DOB"
+                                                      required="#{bindings.dob.hints.mandatory}"
+                                                      columns="#{bindings.dob.hints.displayWidth}"
+                                                      shortDesc="#{bindings.dob.hints.tooltip}" id="id1">
+                                            <f:validator binding="#{bindings.dob.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.dob.format}"/>
+                                        </af:inputDate>
+                                        <af:spacer width="10" height="10" id="s2"/>
+                                        <af:selectOneRadio label="Gender" id="sor1"
+                                                           value="#{bindings.gender.inputValue}" layout="horizontal">
+                                            <af:selectItem label="M" value="M" id="si1"/>
+                                            <af:selectItem label="F" value="F" id="si2"/>
+                                        </af:selectOneRadio>
+                                        <af:spacer width="10" height="10" id="s3"/>
+                                        <af:selectOneChoice label="Year" id="soc1" value="#{bindings.year.inputValue}">
+                                            <af:selectItem label="Freshman" value="Freshman" id="si3"/>
+                                            <af:selectItem label="Sophomore" value="Sophomore" id="si4"/>
+                                            <af:selectItem label="Junior" value="Junior" id="si5"/>
+                                            <af:selectItem label="Senior" value="Senior" id="si6"/>
+                                        </af:selectOneChoice>
+                                        <af:spacer width="10" height="10" id="s4"/>
+                                        <af:inputText value="#{bindings.gpa.inputValue}"
+                                                      label="GPA"
+                                                      required="#{bindings.gpa.hints.mandatory}"
+                                                      columns="#{bindings.gpa.hints.displayWidth}"
+                                                      maximumLength="#{bindings.gpa.hints.precision}"
+                                                      shortDesc="#{bindings.gpa.hints.tooltip}" id="it5">
+                                            <f:validator binding="#{bindings.gpa.validator}"/>
+                                            <af:convertNumber groupingUsed="false" pattern="#{bindings.gpa.format}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
                         </af:panelBox>
                     </af:gridCell>
                 </af:gridRow>
             </af:panelGridLayout>
+       <af:resource type="javascript">
+          function setStudentId(event) {
+            component = event.getSource();
+            AdfCustomEvent.queue(component, "customEvent", {},true); 
+            event.cancel(); 
+          }
+        </af:resource>
         </af:form>
     </af:document>
 </f:view>

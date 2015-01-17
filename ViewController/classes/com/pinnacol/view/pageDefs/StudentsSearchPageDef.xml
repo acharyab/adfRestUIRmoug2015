@@ -10,6 +10,9 @@
     <variableIterator id="variables">
       <variable Type="java.math.BigDecimal" Name="ExecuteWithParams_courseId" IsQueriable="false"/>
     </variableIterator>
+    <iterator Binds="root" RangeSize="25" DataControl="StudentClient" id="StudentClientIterator"/>
+    <accessorIterator MasterBinding="StudentClientIterator" Binds="student" RangeSize="25" DataControl="StudentClient"
+                      BeanClass="com.pinnacol.model.Student" id="studentIterator"/>
   </executables>
   <bindings>
     <action IterBinding="studentsForCourseIterator" id="ExecuteWithParams" RequiresUpdateModel="true"
@@ -21,11 +24,41 @@
         <Item Value="ExecuteWithParams_courseId"/>
       </AttrNames>
     </attributeValues>
+    <action IterBinding="studentIterator" id="getStudentById"
+            InstanceName="com.pinnacol.client.StudentClient.student" DataControl="StudentClient"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="studentId" NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="studentsForCourseIterator" id="dob">
+      <AttrNames>
+        <Item Value="dob"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="studentsForCourseIterator" id="gender">
+      <AttrNames>
+        <Item Value="gender"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="studentsForCourseIterator" id="name">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="studentsForCourseIterator" id="year">
+      <AttrNames>
+        <Item Value="year"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="studentsForCourseIterator" id="gpa">
+      <AttrNames>
+        <Item Value="gpa"/>
+      </AttrNames>
+    </attributeValues>
     <tree IterBinding="studentsForCourseIterator" id="studentsForCourse">
       <nodeDefinition DefName="com.pinnacol.model.StudentCourseVw" Name="studentsForCourse0">
         <AttrNames>
           <Item Value="name"/>
-          <Item Value="studentId"/>
+          <Item Value="id"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
