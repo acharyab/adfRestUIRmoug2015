@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.2.36" id="SearchStudentsPageDef"
+                Package="com.pinnacol.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="StudentCourseVwClient" id="StudentCourseVwClientIterator"/>
+    <accessorIterator MasterBinding="StudentCourseVwClientIterator" Binds="studentsForCourse" RangeSize="25"
+                      DataControl="StudentCourseVwClient" BeanClass="com.pinnacol.model.StudentCourseVw"
+                      id="studentsForCourseIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="studentsForCourseIterator" id="studentsForCourse">
+      <nodeDefinition DefName="com.pinnacol.model.StudentCourseVw" Name="studentsForCourse0">
+        <AttrNames>
+          <Item Value="name"/>
+          <Item Value="id"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="studentsForCourseIterator" id="ExecuteWithParams"
+            InstanceName="com.pinnacol.client.StudentCourseVwClient.studentsForCourse"
+            DataControl="StudentCourseVwClient" RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="courseId" NDValue="${bindings.ExecuteWithParams_courseId}" NDType="java.math.BigDecimal"/>
+    </action>
+    <attributeValues IterBinding="studentsForCourseIterator" id="courseId">
+      <AttrNames>
+        <Item Value="courseId"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

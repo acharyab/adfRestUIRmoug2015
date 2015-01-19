@@ -73,8 +73,8 @@ public class UiListener {
         String displayName = (String) courseInputText.getLocalValue();
         System.out.println("display name is: " + displayName);
         
-        ADFContext.getCurrent().getViewScope().put("searchMsg", "Search result for students enrolled in: " + displayName);
-        AdfFacesContext.getCurrentInstance().addPartialTarget(searchMsg);
+        //ADFContext.getCurrent().getViewScope().put("searchMsg", "Search result for students enrolled in: " + displayName);
+        //AdfFacesContext.getCurrentInstance().addPartialTarget(searchMsg);
         
         String id = null;
         List<Course> courseList = null; 

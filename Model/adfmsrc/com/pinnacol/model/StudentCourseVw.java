@@ -11,14 +11,14 @@ public class StudentCourseVw {
     private BigDecimal courseId;
     private Date dob;
     private String gender;
-    private Integer gpa;
+    private BigDecimal gpa;
     private BigDecimal id;
     private String name;
     private String photo;
     private BigDecimal studentId;
     private String year;
 
-    public StudentCourseVw(BigDecimal courseId, Date dob, String gender, Integer gpa, BigDecimal id, String name,
+    public StudentCourseVw(BigDecimal courseId, Date dob, String gender, BigDecimal gpa, BigDecimal id, String name,
                            String photo, BigDecimal studentId, String year) {
         this.courseId = courseId;
         this.dob = dob;
@@ -55,11 +55,11 @@ public class StudentCourseVw {
         this.gender = gender;
     }
 
-    public Integer getGpa() {
+    public BigDecimal getGpa() {
         return gpa;
     }
 
-    public void setGpa(Integer gpa) {
+    public void setGpa(BigDecimal gpa) {
         this.gpa = gpa;
     }
 
