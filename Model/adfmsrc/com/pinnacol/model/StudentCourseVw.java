@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 public class StudentCourseVw {
     public StudentCourseVw() {
         super();
@@ -17,9 +21,12 @@ public class StudentCourseVw {
     private String photo;
     private BigDecimal studentId;
     private String year;
+    private String courseName;
+    private Integer grade;
+    private Date completeDate;
 
     public StudentCourseVw(BigDecimal courseId, Date dob, String gender, BigDecimal gpa, BigDecimal id, String name,
-                           String photo, BigDecimal studentId, String year) {
+                           String photo, BigDecimal studentId, String year, String courseName, Integer grade, Date completeDate) {
         this.courseId = courseId;
         this.dob = dob;
         this.gender = gender;
@@ -29,6 +36,9 @@ public class StudentCourseVw {
         this.photo = photo;
         this.studentId = studentId;
         this.year = year;
+        this.courseName = courseName;
+        this.grade = grade;
+        this.completeDate = completeDate;
     }
 
     public BigDecimal getCourseId() {
@@ -101,6 +111,30 @@ public class StudentCourseVw {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setCompleteDate(Date completeDate) {
+        this.completeDate = completeDate;
+    }
+
+    public Date getCompleteDate() {
+        return completeDate;
     }
 
 }

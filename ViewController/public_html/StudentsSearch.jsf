@@ -26,7 +26,7 @@
                 </af:gridRow>
                 <af:gridRow id="gr4" marginTop="5px">
                     <af:gridCell id="gc7">
-                        <af:inputText id="it1" value="#{viewScope.searchMsg}" readOnly="true" binding="#{listenerBean.searchMsg}"
+                        <af:inputText id="it1" readOnly="true"
                                       contentStyle="color:Red; font-size:large;"/>
                     </af:gridCell>
                     <af:gridCell id="gc8"/>

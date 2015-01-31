@@ -10,81 +10,94 @@
                 <f:facet name="Left"/>
                 <f:facet name="Center">
                     <af:panelGridLayout id="pgl1">
-                        <af:gridRow marginTop="5px" height="10%" id="gr1">
+                        <af:gridRow marginTop="5px" height="10%" id="gr1" marginBottom="10px">
                             <af:gridCell marginStart="5px" columnSpan="3" marginEnd="5px" id="gc1" halign="stretch">
                                 <af:panelBox id="pb1" background="dark" showDisclosure="false">
                                     <f:facet name="toolbar"/>
                                     <af:panelGroupLayout id="pgl66" layout="horizontal" halign="center">
                                 <af:inputText id="it44"
                                               valueChangeListener="#{listenerBean.CourseChangeListener}"
-                                              binding="#{listenerBean.courseInputText}" columns="50" autoSubmit="true"
+                                              binding="#{listenerBean.courseInputText}" autoSubmit="true"
                                               placeholder="Search by Course"
                                               inlineStyle="padding-bottom:40px; padding-top:20px;"
-                                              value="#{viewScope.courseName}">
+                                              value="#{viewScope.courseName}" columns="50">
                                     <af:autoSuggestBehavior suggestItems="#{autoSuggestBean.SuggestCourses}"/>
                                 </af:inputText>
-                                <af:separator id="s55"/>
+                                        <af:separator id="s55"/>
                             </af:panelGroupLayout>
                                 </af:panelBox>
                             </af:gridCell>
                         </af:gridRow>
-                        <af:gridRow marginTop="5px" height="5%" id="gr2">
-                            <af:gridCell marginStart="5px" columnSpan="3" marginEnd="5px" id="gc2" halign="stretch">
-                                <af:panelBox id="pb2" showDisclosure="false" background="light">
+                        <af:gridRow marginTop="5px" height="5%" id="gr2" marginBottom="5px">
+                            <af:gridCell marginStart="5px" columnSpan="3" marginEnd="5px" id="gc2" halign="stretch"
+                                         valign="stretch">
+                                <af:panelBox id="pb2" showDisclosure="false" background="light" type="stretch">
                                     <f:facet name="toolbar"/>
+                                    <af:panelGroupLayout id="pgl11" valign="top" layout="horizontal">
+                                        <af:inputText id="it2" value="#{viewScope.searchMsg}" readOnly="true"
+                                                      binding="#{listenerBean.searchMsg}"
+                                                      contentStyle="color:Red; font-size:large;"/>
+                                    </af:panelGroupLayout>
                                 </af:panelBox>
                             </af:gridCell>
                         </af:gridRow>
-                        <af:gridRow marginTop="5px" height="50%" id="gr3">
+                        <af:gridRow marginTop="10px" height="45%" id="gr3" marginBottom="5px">
                             <af:gridCell marginStart="5px" rowSpan="2" width="34%" id="gc3" halign="stretch"
                                          valign="stretch">
                                 <af:panelBox id="pb3" showDisclosure="false" background="dark" partialTriggers="it44">
-                                    <af:panelGroupLayout id="pgl6" layout="vertical" halign="end">
+                                    <af:panelGroupLayout id="pgl6" layout="vertical" halign="end"
+                                                         rendered="#{viewScope.courseName == null ? false : true}">
                                         <af:button text="Enroll Student" id="b1" styleClass="ADFAppNavButton"
                                                    inlineStyle="padding-top:5px; padding-bottom:5px;"/>
                                     </af:panelGroupLayout>
                                     <f:facet name="toolbar"/>
-                                    <af:listView value="#{bindings.studentsForCourse.collectionModel}" var="item"
-                                                 emptyText="#{bindings.studentsForCourse.viewable ? 'No data to display.' : 'Access Denied.'}" id="lv1"
-                                                 selectionListener="#{bindings.studentsForCourse.collectionModel.makeCurrent}"
-                                                 selection="single" immediate="true">
-                                        <af:listItem id="li1">
-                                            <af:panelGridLayout id="pgl2">
-                                                <af:gridRow marginTop="10px" height="auto" marginBottom="5px" id="gr5">
-                                                    <af:gridCell marginStart="5px" width="60%" id="gc7">
-                                                        <af:outputFormatted value="#{item.bindings.name.inputValue}"
-                                                                            id="of1"/>
-                                                    </af:gridCell>
-                                                    <af:gridCell marginStart="5px" width="20%" id="gc8">
-                                                        <af:outputFormatted value="#{item.bindings.id.inputValue}"
-                                                                            id="of2">
-                                                            <af:convertNumber groupingUsed="false"
-                                                                              pattern="#{bindings.studentsForCourse.hints.id.format}"/>
-                                                        </af:outputFormatted>
-                                                    </af:gridCell>
-                                                    <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
-                                                                 id="gc9" halign="end">
-                                                        <af:panelGroupLayout id="pgl5" halign="end" layout="horizontal">
-                                                            <af:button id="b2"
-                                                                       icon="#{resource['images:delete1.png']}"/>
-                                                        </af:panelGroupLayout>
-                                                    </af:gridCell>
-                                                </af:gridRow>
-                                            </af:panelGridLayout>
-                                        </af:listItem>
-                                    </af:listView>
+                                    <af:panelGroupLayout id="pgl9" layout="vertical"
+                                                         rendered="#{viewScope.courseName == null ? false : true}">
+                                        <af:listView value="#{bindings.studentsForCourse.collectionModel}" var="item"
+                                                     emptyText="#{bindings.studentsForCourse.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                     id="lv1" selection="single" immediate="true"
+                                                     selectionListener="#{listenerBean.setStudentScoreGraph}">
+                                            <af:listItem id="li1">
+                                                <af:panelGridLayout id="pgl2" dimensionsFrom="children">
+                                                    <af:gridRow marginTop="1px" height="auto" marginBottom="1px"
+                                                                id="gr5">
+                                                        <af:gridCell marginStart="5px" width="60%" id="gc7">
+                                                            <af:outputFormatted value="#{item.bindings.name.inputValue}"
+                                                                                id="of1"/>
+                                                        </af:gridCell>
+                                                        <af:gridCell marginStart="5px" width="20%" id="gc8">
+                                                            <af:outputFormatted value="#{item.bindings.id.inputValue}"
+                                                                                id="of2">
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.studentsForCourse.hints.id.format}"/>
+                                                            </af:outputFormatted>
+                                                        </af:gridCell>
+                                                        <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                                                                     id="gc9" halign="end">
+                                                            <af:panelGroupLayout id="pgl5" halign="end"
+                                                                                 layout="horizontal">
+                                                                <af:button id="b2"
+                                                                           icon="#{resource['images:delete1.png']}"/>
+                                                            </af:panelGroupLayout>
+                                                        </af:gridCell>
+                                                    </af:gridRow>
+                                                </af:panelGridLayout>
+                                            </af:listItem>
+                                        </af:listView>
+                                    </af:panelGroupLayout>
                                 </af:panelBox>
                             </af:gridCell>
-                            <af:gridCell marginStart="5px" columnSpan="2" marginEnd="5px" id="gc4" halign="stretch"
-                                         valign="stretch">
+                            <af:gridCell marginStart="10px" columnSpan="1" marginEnd="5px" id="gc4" halign="stretch"
+                                         valign="stretch" width="33%">
                                 <af:panelBox id="pb4" showDisclosure="false" background="medium"
-                                             text="#{bindings.name.inputValue}">
+                                             text="#{bindings.name.inputValue}" partialTriggers="lv1">
                                     <f:facet name="toolbar"/>
-                                    <af:panelGroupLayout id="pgl3" layout="horizontal">
-                                        <af:panelGroupLayout id="pgl4" layout="vertical" valign="top">
+                                    <af:panelGroupLayout id="pgl3" layout="scroll"
+                                                         rendered="#{viewScope.courseName == null ? false : true}">
+                                        <af:panelGroupLayout id="pgl4" layout="vertical" valign="top"
+                                                             inlineStyle="margin-right:40px; margin-left:20px;">
                                             <af:image id="i1" source="/images/#{bindings.name.inputValue}.jpg"
-                                                      shortDesc="#{bindings.name.inputValue}"
-                                                      inlineStyle="padding-left:20px; padding-top:20px;"/>
+                                                      shortDesc="#{bindings.name.inputValue}"/>
                                         </af:panelGroupLayout>
                                         <af:panelFormLayout id="pfl2" fieldWidth="100">
                                             <f:facet name="footer"/>
@@ -109,28 +122,59 @@
                                             </af:selectOneChoice>
                                         </af:panelFormLayout>
                                     </af:panelGroupLayout>
+                                    <af:panelGroupLayout id="pgl10" layout="horizontal"
+                                                         inlineStyle="margin-bottom:20px;" halign="end"
+                                                         rendered="#{viewScope.courseName == null ? false : true}">
+                                        <af:button text="Create Student" id="b3" styleClass="ADFAppNavButton"
+                                                   inlineStyle="padding-top:5px; padding-bottom:5px;"/>
+                                        <af:button text="Save Changes" id="b4" styleClass="ADFAppNavButton"
+                                                   inlineStyle="padding-top:5px; padding-bottom:5px;"/>
+                                    </af:panelGroupLayout>
+                                </af:panelBox>
+                            </af:gridCell>
+                            <af:gridCell marginStart="10px" width="33%" id="gc5" halign="stretch" valign="stretch">
+                                <af:panelBox id="pb5" background="medium" showDisclosure="false" titleHalign="center"
+                                             text="#{viewScope.courseName == null ? null : 'GPA'}"
+                                             partialTriggers="it44">
+                                    <f:facet name="toolbar"/>
+                                    <af:panelGroupLayout id="pgl8" halign="center" valign="middle" layout="default"
+                                                         rendered="#{viewScope.courseName == null ? false : true}"
+                                                         partialTriggers="it44">
+                                        <dvt:statusMeterGauge orientation="circular"
+                                                              inlineStyle="width:75%; height:75%; max-height:75%; max-width:75%; flex-align:center;"
+                                                              id="statusMeterGauge1" minimum="0" maximum="4"
+                                                              value="#{bindings.gpa12.inputValue}" indicatorSize="1.0">
+                                            <dvt:gaugeMetricLabel rendered="true" id="gml1"/>
+                                            <dvt:gaugeThreshold id="thr1" color="#d62800" maximum="2.5"/>
+                                            <dvt:gaugeThreshold id="thr2" color="#ffc600" maximum="3.5"/>
+                                            <dvt:gaugeThreshold id="thr3" color="#008442"/>
+                                        </dvt:statusMeterGauge>
+                                    </af:panelGroupLayout>
                                 </af:panelBox>
                             </af:gridCell>
                         </af:gridRow>
-                        <af:gridRow marginTop="5px" height="35%" marginBottom="5px" id="gr4">
-                            <af:gridCell marginStart="5px" width="33%" id="gc5" halign="stretch" valign="stretch">
-                                <af:panelBox id="pb5" background="medium" showDisclosure="false"
-                                             titleHalign="center" text="GPA">
+                        <af:gridRow marginTop="10px" height="40%" marginBottom="5px" id="gr4">
+                            <af:gridCell marginStart="10px" width="33%" marginEnd="5px" id="gc6" columnSpan="2"
+                                         halign="stretch" valign="stretch">
+                                <af:panelBox id="pb6" showDisclosure="false" background="medium" partialTriggers="it44"
+                                             text="#{viewScope.courseName == null ? null : 'Course History'}">
                                     <f:facet name="toolbar"/>
-                                    <dvt:statusMeterGauge orientation="circular" inlineStyle="width:300px;height:200px"
-                                                          id="statusMeterGauge1" minimum="0" maximum="4"
-                                                          value="#{bindings.gpa12.inputValue}">
-                                        <dvt:gaugeMetricLabel rendered="true" id="gml1"/>
-                                        <dvt:gaugeThreshold id="thr1" color="#d62800" maximum="2.5"/>
-                                        <dvt:gaugeThreshold id="thr2" color="#ffc600" maximum="3.5"/>
-                                        <dvt:gaugeThreshold id="thr3" color="#008442"/>
-                                    </dvt:statusMeterGauge>
-                                </af:panelBox>
-                            </af:gridCell>
-                            <af:gridCell marginStart="5px" width="33%" marginEnd="5px" id="gc6" halign="stretch"
-                                         valign="stretch">
-                                <af:panelBox id="pb6" showDisclosure="false" background="medium">
-                                    <f:facet name="toolbar"/>
+                                    <af:panelGroupLayout id="pgl7" layout="vertical"
+                                                         rendered="#{viewScope.courseName == null ? false : true}">
+                                        <dvt:barChart id="barChart1" var="row"
+                                                      value="#{bindings.coursesByStudent1.collectionModel}"
+                                                      contentDelivery="immediate"
+                                                      inlineStyle="margin-bottom:10px; padding-bottom:10px; max-width:100%; width:100%; min-width:0pt; max-height:100%; min-height:0pt; height:100%;"
+                                                      hoverBehavior="dim" zoomAndScroll="live" dataSelection="single">
+                                            <dvt:chartLegend id="cl1" scrolling="asNeeded"/>
+                                            <f:facet name="dataStamp">
+                                                <dvt:chartDataItem id="di1" value="#{row.grade}"
+                                                                   group="#{row.completeDate}"
+                                                                   series="#{row.courseName}" markerShape="circle"
+                                                                   markerDisplayed="true"/>
+                                            </f:facet>
+                                        </dvt:barChart>
+                                    </af:panelGroupLayout>
                                 </af:panelBox>
                             </af:gridCell>
                         </af:gridRow>

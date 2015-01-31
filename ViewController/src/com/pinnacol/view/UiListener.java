@@ -15,6 +15,7 @@ import javax.faces.event.ValueChangeEvent;
 import oracle.adf.model.BindingContext;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 
+import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.component.rich.output.RichOutputText;
 
 import oracle.adf.view.rich.render.ClientEvent;
@@ -26,6 +27,7 @@ import org.apache.myfaces.trinidad.event.SelectionEvent;
 
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
+import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.application.Application;
 
@@ -40,8 +42,9 @@ import oracle.jbo.Row;
 
 public class UiListener {
     private RichInputText courseInputText;
-    private RichInputText studentId;
+    //private RichInputText studentId;
     private RichInputText searchMsg;
+    //private RichOutputFormatted studntId;
 
 
     public UiListener() {
@@ -64,6 +67,20 @@ public class UiListener {
         }         
        
     }
+   
+    private void queryCoursesByStudent(String stId){
+         BigDecimal studentId = new BigDecimal (stId);
+         
+         BindingContainer bindings = getBindings();
+         OperationBinding operationBinding = bindings.getOperationBinding("coursesByStudent");
+         operationBinding.getParamsMap().put("studentId", studentId); 
+         
+         Object result = operationBinding.execute();
+         if (!operationBinding.getErrors().isEmpty()) {
+             System.out.println("error executing with params");
+         }         
+        
+     }
     
 
     public void CourseChangeListener(ValueChangeEvent valueChangeEvent) {
@@ -73,10 +90,11 @@ public class UiListener {
         String displayName = (String) courseInputText.getLocalValue();
         System.out.println("display name is: " + displayName);
         
-        //ADFContext.getCurrent().getViewScope().put("searchMsg", "Search result for students enrolled in: " + displayName);
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(searchMsg);
+        ADFContext.getCurrent().getViewScope().put("searchMsg", "Students enrolled in: " + displayName);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(searchMsg);
         
         String id = null;
+        String stId = null;
         List<Course> courseList = null; 
         
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
@@ -102,6 +120,22 @@ public class UiListener {
         }
         }
         queryStudents(id);
+        
+        
+        DCBindingContainer bindings1 = (DCBindingContainer)BindingContext.getCurrent().getCurrentBindingsEntry();
+        // Provide the Iterator Name
+        DCIteratorBinding iteratorBinding = (DCIteratorBinding)bindings1.get("studentsForCourseIterator");
+
+        if(iteratorBinding != null){
+        Row currentRow = iteratorBinding.getCurrentRow();
+        if(currentRow != null){
+        //Provide the attribute name
+        System.out.println("id is: " + currentRow.getAttribute("studentId"));
+        }
+            queryCoursesByStudent(currentRow.getAttribute("studentId").toString());
+        }
+        
+        
     }
 
     public void setCourseInputText(RichInputText courseInputText) {
@@ -112,7 +146,7 @@ public class UiListener {
         return courseInputText;
     }
 
-    public void getStudentById() {
+  /*  public void getStudentById() {
         
         //resolveExpression("#{bindings.studentsForCourse.collectionModel.makeCurrent}");
         
@@ -137,22 +171,12 @@ public class UiListener {
             System.out.println("error executing with params");
         } 
     }
-    }
+    } 
+   */ 
     
-    
-    public static Object resolveExpression(String expression) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();  
-        //FacesContext facesContext = getFacesContext();
-        Application app = facesContext.getApplication();
-        ExpressionFactory elFactory = app.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        ValueExpression valueExp = 
-            elFactory.createValueExpression(elContext, expression,
-                                            Object.class);
-        return valueExp.getValue(elContext);
-    }
 
-    public void setStudentId(RichInputText studentId) {
+
+ /*   public void setStudentId(RichInputText studentId) {
         this.studentId = studentId;
     }
 
@@ -160,7 +184,7 @@ public class UiListener {
         return studentId;
     }
 
-    public void queryByStudentId(ClientEvent clientEvent) {
+   public void queryByStudentId(ClientEvent clientEvent) {
         DCBindingContainer bindings1 = (DCBindingContainer)BindingContext.getCurrent().getCurrentBindingsEntry();
         // Provide the Iterator Name
         DCIteratorBinding iteratorBinding = (DCIteratorBinding)bindings1.get("studentsForCourseIterator");
@@ -184,7 +208,7 @@ public class UiListener {
         } 
         }
         }
-    }
+    } */
 
     public void setSearchMsg(RichInputText searchMsg) {
         this.searchMsg = searchMsg;
@@ -193,4 +217,44 @@ public class UiListener {
     public RichInputText getSearchMsg() {
         return searchMsg;
     }
+
+ /*   public void setStudntId(RichOutputFormatted studntId) {
+        this.studntId = studntId;
+    }
+
+    public RichOutputFormatted getStudntId() {
+        return studntId;
+    } */
+
+    public void setStudentScoreGraph(SelectionEvent selectionEvent) {
+        invokeEL("#{bindings.studentsForCourse.collectionModel.makeCurrent}", new Class[] {SelectionEvent.class}, new Object[] { selectionEvent });   
+        
+        DCBindingContainer bindings1 = (DCBindingContainer)BindingContext.getCurrent().getCurrentBindingsEntry();
+        // Provide the Iterator Name
+        DCIteratorBinding iteratorBinding = (DCIteratorBinding)bindings1.get("studentsForCourseIterator");
+
+        if(iteratorBinding != null){
+        Row currentRow = iteratorBinding.getCurrentRow();
+        if(currentRow != null){
+        //Provide the attribute name
+        System.out.println("id is: " + currentRow.getAttribute("studentId"));
+        }
+            queryCoursesByStudent(currentRow.getAttribute("studentId").toString());
+        }
+        
+    }
+    
+    public static Object invokeEL(String el, Class[] paramTypes,
+    Object[] params) {
+    FacesContext facesContext = FacesContext.getCurrentInstance();
+    ELContext elContext = facesContext.getELContext();
+    ExpressionFactory expressionFactory =
+    facesContext.getApplication().getExpressionFactory();
+    MethodExpression exp =
+    expressionFactory.createMethodExpression(elContext, el,
+    Object.class, paramTypes);
+
+    return exp.invoke(elContext, params);
+    }
+    
 }

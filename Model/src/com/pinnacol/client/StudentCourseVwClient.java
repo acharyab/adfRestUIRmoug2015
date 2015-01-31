@@ -19,27 +19,28 @@ public class StudentCourseVwClient {
     public StudentCourseVwClient() {
         super();
     }
-    public List<StudentCourseVw> getStudents() throws Exception {
-        String url = "";
-        Client client = Client.create();
-        List<StudentCourseVw> studentCourseList = new ArrayList<StudentCourseVw>();
-        
-        url = "http://127.0.0.1:7101/adfRestServiceRmoug2015-service-context-root/resources/service/studentCourse?courseId=20";
-        System.out.println("urls is: ! " + url);
-
-        WebResource webResource = client.resource(url);
-        ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-
-        String json = response.getEntity(String.class);
-        ObjectMapper mapper = new ObjectMapper();
-        JSONArray jsa = new JSONArray(json);
-
-        for (int i = 0; i < jsa.length(); i++) {
-            JSONObject jo = (JSONObject) jsa.get(i);
-            studentCourseList.add(mapper.readValue(jo.toString(), StudentCourseVw.class));
-        }
-        return studentCourseList;
-    }      
+//    public List<StudentCourseVw> getStudents() throws Exception {
+//        String url = "";
+//        Client client = Client.create();
+//        List<StudentCourseVw> studentCourseList = new ArrayList<StudentCourseVw>();
+//        
+//        url = "http://127.0.0.1:7101/adfRestServiceRmoug2015-service-context-root/resources/service/studentCourse?courseId=20";
+//        System.out.println("urls is: ! " + url);
+//
+//        WebResource webResource = client.resource(url);
+//        ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+//
+//        String json = response.getEntity(String.class);
+//        ObjectMapper mapper = new ObjectMapper();
+//        JSONArray jsa = new JSONArray(json);
+//
+//        for (int i = 0; i < jsa.length(); i++) {
+//            JSONObject jo = (JSONObject) jsa.get(i);
+//            studentCourseList.add(mapper.readValue(jo.toString(), StudentCourseVw.class));
+//        }
+//        return studentCourseList;
+//    }    
+    
     public List<StudentCourseVw> getStudentsForCourse(BigDecimal courseId) throws Exception {
         String url = "";
         Client client = Client.create();
@@ -60,5 +61,28 @@ public class StudentCourseVwClient {
             studentCourseList.add(mapper.readValue(jo.toString(), StudentCourseVw.class));
         }
         return studentCourseList;
-    }    
+    }  
+    //http://127.0.0.1:7101/adfRestServiceRmoug2015-service-context-root/resources/service/coursesForStudent?studentId=19
+    
+    public List<StudentCourseVw> getCoursesByStudent(BigDecimal studentId) throws Exception {
+        String url = "";
+        Client client = Client.create();
+        List<StudentCourseVw> studentCourseList = new ArrayList<StudentCourseVw>();
+        
+        url = "http://127.0.0.1:7101/adfRestServiceRmoug2015-service-context-root/resources/service/coursesForStudent?studentId=" + studentId;
+        System.out.println("urls is: ! " + url);
+
+        WebResource webResource = client.resource(url);
+        ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+
+        String json = response.getEntity(String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        JSONArray jsa = new JSONArray(json);
+
+        for (int i = 0; i < jsa.length(); i++) {
+            JSONObject jo = (JSONObject) jsa.get(i);
+            studentCourseList.add(mapper.readValue(jo.toString(), StudentCourseVw.class));
+        }
+        return studentCourseList;
+    }
 }

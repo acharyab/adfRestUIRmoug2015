@@ -19,4 +19,36 @@
       </SchemaBasedProperties>
     </Properties>
   </PDefAttribute>
+  <PDefAttribute
+    Name="completeDate"
+    IsUpdateable="true">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMAT
+          ResId="${adfBundle['com.pinnacol.model.ModelBundle']['com.pinnacol.model.StudentCourseVw.completeDate_FMT_FORMAT']}"/>
+        <FMT_FORMATTER
+          ResId="${adfBundle['com.pinnacol.model.ModelBundle']['com.pinnacol.model.StudentCourseVw.completeDate_FMT_FORMATTER']}"/>
+        <CONTROLTYPE
+          Value="date"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </PDefAttribute>
+  <PDefAttribute
+    Name="dob"
+    IsUpdateable="true">
+    <Properties>
+      <SchemaBasedProperties>
+        <FMT_FORMAT
+          ResId="${adfBundle['com.pinnacol.model.ModelBundle']['com.pinnacol.model.StudentCourseVw.dob_FMT_FORMAT']}"/>
+        <FMT_FORMATTER
+          ResId="${adfBundle['com.pinnacol.model.ModelBundle']['com.pinnacol.model.StudentCourseVw.dob_FMT_FORMATTER']}"/>
+        <CONTROLTYPE
+          Value="date"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </PDefAttribute>
 </PDefViewObject>
