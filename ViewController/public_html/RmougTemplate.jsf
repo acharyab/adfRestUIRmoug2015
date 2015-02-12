@@ -21,7 +21,7 @@
                 </af:panelBox>
             </af:gridCell>
         </af:gridRow>
-        <af:gridRow marginTop="5px" height="80%" id="pt_gr2">
+        <af:gridRow marginTop="5px" height="88%" id="pt_gr2">
             <af:gridCell marginStart="5px" width="10%" id="pt_gc2">
                 <af:facetRef facetName="Left"/>
             </af:gridCell>
@@ -32,7 +32,7 @@
                 <af:facetRef facetName="Right"/>
             </af:gridCell>
         </af:gridRow>
-        <af:gridRow marginTop="5px" height="10%" marginBottom="5px" id="pt_gr3">
+        <af:gridRow marginTop="5px" height="2%" marginBottom="5px" id="pt_gr3">
             <af:gridCell marginStart="5px" columnSpan="3" marginEnd="5px" id="pt_gc5">
                 <af:facetRef facetName="Bottom"/>
             </af:gridCell>
