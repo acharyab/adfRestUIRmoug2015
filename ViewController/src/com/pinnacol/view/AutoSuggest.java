@@ -22,7 +22,7 @@ public class AutoSuggest {
         List<Course> courseList = null;        
 
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        SessionData sessionData = (SessionData) ec.getSessionMap().get("sessionDataBean"); 
+        SessionData sessionData = (SessionData)ec.getSessionMap().get("sessionDataBean"); 
        
         if (sessionData == null){
             sessionData = new SessionData();
@@ -51,7 +51,7 @@ public class AutoSuggest {
                 outList.add(item);
             }
         }
-        
+
         return outList;
     }
 }

@@ -7,7 +7,7 @@ import java.util.Date;
 public class Student {
     private Date dob;
     private String gender;
-    private Integer gpa;
+    private BigDecimal gpa;
     private BigDecimal id;
     private String name;
     private String photo;
@@ -16,7 +16,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Date dob, String gender, Integer gpa, BigDecimal id, String name, String photo, String year) {
+    public Student(Date dob, String gender, BigDecimal gpa, BigDecimal id, String name, String photo, String year) {
         this.dob = dob;
         this.gender = gender;
         this.gpa = gpa;
@@ -42,11 +42,11 @@ public class Student {
         this.gender = gender;
     }
 
-    public Integer getGpa() {
+    public BigDecimal getGpa() {
         return gpa;
     }
 
-    public void setGpa(Integer gpa) {
+    public void setGpa(BigDecimal gpa) {
         this.gpa = gpa;
     }
 

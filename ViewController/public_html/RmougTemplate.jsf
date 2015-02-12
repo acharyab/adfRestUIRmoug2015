@@ -2,15 +2,21 @@
 <af:pageTemplateDef xmlns:af="http://xmlns.oracle.com/adf/faces/rich" var="attrs" definition="private"
                     xmlns:afc="http://xmlns.oracle.com/adf/faces/rich/component" xmlns:f="http://java.sun.com/jsf/core">
     <af:panelGridLayout id="pt_pgl1">
-        <af:gridRow marginTop="5px" height="10%" id="pt_gr1">
-            <af:gridCell marginStart="5px" columnSpan="3" marginEnd="5px" id="pt_gc1" halign="stretch" valign="stretch"
+        <af:gridRow height="10%" id="pt_gr1">
+            <af:gridCell columnSpan="3" id="pt_gc1" halign="stretch" valign="stretch"
                          width="auto" inlineStyle="border-image-width:0;">
-                <af:panelBox id="pt_pb1" showDisclosure="false" type="stretch" background="light">
-                    <f:facet name="toolbar"/>
+                <af:panelBox id="pt_pb1" showDisclosure="false" type="stretch"
+                             inlineStyle="background-color:white;">
                     <af:panelGroupLayout id="pt_pgl2" halign="center"
-                                         inlineStyle="color:#c63100; font-size:xx-large; font-weight:bold; margin-top:20px;"
-                                         layout="scroll">
-                        <af:outputText value="POTUS University" id="pt_ot1"/>
+                                         inlineStyle="color:#2121ff; font-size:xx-large; font-weight:bold"
+                                         valign="top" layout="scroll">
+                        <af:panelGroupLayout id="pt_pgl3" layout="horizontal">
+                            <af:image id="pt_i1" source="#{resource['images:potseal.JPG']}"
+                                      inlineStyle="height:50px; max-height:50px; width:50px; min-width:50px;"/>
+                            <af:panelGroupLayout id="pt_pgl4" valign="top" halign="center">
+                                <af:outputText value="POTUS University" id="pt_ot1" inlineStyle="margin-left:10px;"/>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
                     </af:panelGroupLayout>
                 </af:panelBox>
             </af:gridCell>

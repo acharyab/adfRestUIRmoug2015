@@ -30,33 +30,37 @@
                         </af:gridRow>
                         <af:gridRow marginTop="5px" height="5%" id="gr2" marginBottom="5px">
                             <af:gridCell marginStart="5px" columnSpan="3" marginEnd="5px" id="gc2" halign="stretch"
-                                         valign="stretch">
-                                <af:panelBox id="pb2" showDisclosure="false" background="light" type="stretch">
-                                    <f:facet name="toolbar"/>
-                                    <af:panelGroupLayout id="pgl11" valign="top" layout="horizontal">
-                                        <af:inputText id="it2" value="#{viewScope.searchMsg}" readOnly="true"
-                                                      binding="#{listenerBean.searchMsg}"
-                                                      contentStyle="color:Red; font-size:large;"/>
-                                    </af:panelGroupLayout>
-                                </af:panelBox>
+                                         valign="stretch" width="auto">
+                                <af:panelGroupLayout id="pgl11" valign="top" halign="center">
+                                    <af:inputText id="it2" value="#{viewScope.searchMsg}" readOnly="true"
+                                                  binding="#{listenerBean.searchMsg}"
+                                                  contentStyle="color:Red; font-size:large;"/>
+                                </af:panelGroupLayout>
                             </af:gridCell>
                         </af:gridRow>
-                        <af:gridRow marginTop="10px" height="45%" id="gr3" marginBottom="5px">
+                        <af:gridRow marginTop="30px" height="45%" id="gr3" marginBottom="5px">
                             <af:gridCell marginStart="5px" rowSpan="2" width="34%" id="gc3" halign="stretch"
                                          valign="stretch">
-                                <af:panelBox id="pb3" showDisclosure="false" background="dark" partialTriggers="it44">
+                                <af:panelBox id="pb3" showDisclosure="false" background="dark" partialTriggers="it44"
+                                             binding="#{listenerBean.studentListPBox}">
                                     <af:panelGroupLayout id="pgl6" layout="vertical" halign="end"
                                                          rendered="#{viewScope.courseName == null ? false : true}">
                                         <af:button text="Enroll Student" id="b1" styleClass="ADFAppNavButton"
-                                                   inlineStyle="padding-top:5px; padding-bottom:5px;"/>
+                                                   inlineStyle="padding-top:5px; padding-bottom:5px;"
+                                                   disabled="#{!bindings.studentsNotEnrolled.enabled}" immediate="true"
+                                                   action="#{listenerBean.getStudentsNotEnrolled}">
+                                            <af:showPopupBehavior popupId="::p2" triggerType="click"/>
+                                        </af:button>
                                     </af:panelGroupLayout>
                                     <f:facet name="toolbar"/>
                                     <af:panelGroupLayout id="pgl9" layout="vertical"
-                                                         rendered="#{viewScope.courseName == null ? false : true}">
+                                                         rendered="#{viewScope.courseName == null ? false : true}"
+                                                         binding="#{EnrollStudentBean.studentListPGL}">
                                         <af:listView value="#{bindings.studentsForCourse.collectionModel}" var="item"
                                                      emptyText="#{bindings.studentsForCourse.viewable ? 'No data to display.' : 'Access Denied.'}"
                                                      id="lv1" selection="single" immediate="true"
-                                                     selectionListener="#{listenerBean.setStudentScoreGraph}">
+                                                     selectionListener="#{listenerBean.setStudentScoreGraph}"
+                                                     binding="#{listenerBean.studentList}">
                                             <af:listItem id="li1">
                                                 <af:panelGridLayout id="pgl2" dimensionsFrom="children">
                                                     <af:gridRow marginTop="1px" height="auto" marginBottom="1px"
@@ -66,8 +70,15 @@
                                                                                 id="of1"/>
                                                         </af:gridCell>
                                                         <af:gridCell marginStart="5px" width="20%" id="gc8">
-                                                            <af:outputFormatted value="#{item.bindings.id.inputValue}"
-                                                                                id="of2">
+                                                            <af:outputFormatted value="#{item.bindings.studentId.inputValue}"
+                                                                                id="of2"
+                                                                                binding="#{UpdateStudentBean.studentIdList}">
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.studentsForCourse.hints.id.format}"/>
+                                                            </af:outputFormatted>
+                                                            <af:outputFormatted value="#{item.bindings.courseId.inputValue}"
+                                                                                id="of22"
+                                                                                rendered="false">
                                                                 <af:convertNumber groupingUsed="false"
                                                                                   pattern="#{bindings.studentsForCourse.hints.id.format}"/>
                                                             </af:outputFormatted>
@@ -77,7 +88,9 @@
                                                             <af:panelGroupLayout id="pgl5" halign="end"
                                                                                  layout="horizontal">
                                                                 <af:button id="b2"
-                                                                           icon="#{resource['images:delete1.png']}"/>
+                                                                           icon="#{resource['images:delete1.png']}"
+                                                                           actionListener="#{listenerBean.deleteEnrolledStudent}"
+                                                                           immediate="true"/>
                                                             </af:panelGroupLayout>
                                                         </af:gridCell>
                                                     </af:gridRow>
@@ -87,10 +100,11 @@
                                     </af:panelGroupLayout>
                                 </af:panelBox>
                             </af:gridCell>
-                            <af:gridCell marginStart="10px" columnSpan="1" marginEnd="5px" id="gc4" halign="stretch"
+                            <af:gridCell marginStart="20px" columnSpan="1" marginEnd="5px" id="gc4" halign="stretch"
                                          valign="stretch" width="33%">
                                 <af:panelBox id="pb4" showDisclosure="false" background="medium"
-                                             text="#{bindings.name.inputValue}" partialTriggers="lv1">
+                                             text="#{bindings.name.inputValue}"
+                                             contentDelivery="immediate" binding="#{listenerBean.studentDetailPB}">
                                     <f:facet name="toolbar"/>
                                     <af:panelGroupLayout id="pgl3" layout="scroll"
                                                          rendered="#{viewScope.courseName == null ? false : true}">
@@ -98,41 +112,45 @@
                                                              inlineStyle="margin-right:40px; margin-left:20px;">
                                             <af:image id="i1" source="/images/#{bindings.name.inputValue}.jpg"
                                                       shortDesc="#{bindings.name.inputValue}"/>
+                                            <af:panelFormLayout id="pfl2">
+                                                <af:inputDate value="#{bindings.dob1.inputValue}"
+                                                              label="DOB"
+                                                              required="#{bindings.dob1.hints.mandatory}"
+                                                              columns="#{bindings.dob1.hints.displayWidth}"
+                                                              shortDesc="#{bindings.dob1.hints.tooltip}" id="id1">
+                                                    <f:validator binding="#{bindings.dob1.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.dob1.format}"/>
+                                                </af:inputDate>
+                                                <af:selectOneRadio label="Gender" value="#{bindings.gender1.inputValue}"
+                                                                   id="sor1" layout="horizontal">
+                                                    <af:selectItem label="M" value="M" id="si1"/>
+                                                    <af:selectItem label="F" value="F" id="si2"/>
+                                                </af:selectOneRadio>
+                                                <af:selectOneChoice label="Year" value="#{bindings.year.inputValue}"
+                                                                    id="soc1">
+                                                    <af:selectItem label="Freshman" value="Freshman" id="si3"/>
+                                                    <af:selectItem label="Sophomore" value="Sophomore" id="si10"/>
+                                                    <af:selectItem label="Junior" value="Junior" id="si11"/>
+                                                    <af:selectItem label="Senior" value="Senior" id="si12"/>
+                                                </af:selectOneChoice>
+                                            </af:panelFormLayout>
                                         </af:panelGroupLayout>
-                                        <af:panelFormLayout id="pfl2" fieldWidth="100">
-                                            <f:facet name="footer"/>
-                                            <af:inputDate value="#{bindings.dob.inputValue}" label="DOB"
-                                                          required="#{bindings.dob.hints.mandatory}"
-                                                          columns="#{bindings.dob.hints.displayWidth}"
-                                                          shortDesc="#{bindings.dob.hints.tooltip}" id="id1">
-                                                <f:validator binding="#{bindings.dob.validator}"/>
-                                                <af:convertDateTime pattern="#{bindings.dob.format}"/>
-                                            </af:inputDate>
-                                            <af:selectOneRadio label="Gender" value="#{bindings.gender.inputValue}"
-                                                               id="sor1" layout="horizontal">
-                                                <af:selectItem label="M" value="M" id="si2"/>
-                                                <af:selectItem label="F" value="F" id="si3"/>
-                                            </af:selectOneRadio>
-                                            <af:selectOneChoice value="#{bindings.year.inputValue}"
-                                                                label="Year"
-                                                                required="#{bindings.year.hints.mandatory}"
-                                                                shortDesc="#{bindings.year.hints.tooltip}" id="soc1">
-                                                <f:selectItems value="#{bindings.year.items}" id="si1"/>
-                                                <f:validator binding="#{bindings.year.validator}"/>
-                                            </af:selectOneChoice>
-                                        </af:panelFormLayout>
                                     </af:panelGroupLayout>
                                     <af:panelGroupLayout id="pgl10" layout="horizontal"
                                                          inlineStyle="margin-bottom:20px;" halign="end"
                                                          rendered="#{viewScope.courseName == null ? false : true}">
                                         <af:button text="Create Student" id="b3" styleClass="ADFAppNavButton"
-                                                   inlineStyle="padding-top:5px; padding-bottom:5px;"/>
+                                                   inlineStyle="padding-top:5px; padding-bottom:5px;">
+                                            <af:showPopupBehavior popupId="::p1" triggerType="action"/>
+                                        </af:button>
                                         <af:button text="Save Changes" id="b4" styleClass="ADFAppNavButton"
-                                                   inlineStyle="padding-top:5px; padding-bottom:5px;"/>
+                                                   inlineStyle="padding-top:5px; padding-bottom:5px;"
+                                                   action="#{UpdateStudentBean.updateStudent}"/>
                                     </af:panelGroupLayout>
                                 </af:panelBox>
+                               
                             </af:gridCell>
-                            <af:gridCell marginStart="10px" width="33%" id="gc5" halign="stretch" valign="stretch">
+                            <af:gridCell marginStart="20px" width="33%" id="gc5" halign="stretch" valign="stretch">
                                 <af:panelBox id="pb5" background="medium" showDisclosure="false" titleHalign="center"
                                              text="#{viewScope.courseName == null ? null : 'GPA'}"
                                              partialTriggers="it44">
@@ -153,8 +171,8 @@
                                 </af:panelBox>
                             </af:gridCell>
                         </af:gridRow>
-                        <af:gridRow marginTop="10px" height="40%" marginBottom="5px" id="gr4">
-                            <af:gridCell marginStart="10px" width="33%" marginEnd="5px" id="gc6" columnSpan="2"
+                        <af:gridRow marginTop="20px" height="40%" marginBottom="5px" id="gr4">
+                            <af:gridCell marginStart="20px" width="33%" marginEnd="5px" id="gc6" columnSpan="2"
                                          halign="stretch" valign="stretch">
                                 <af:panelBox id="pb6" showDisclosure="false" background="medium" partialTriggers="it44"
                                              text="#{viewScope.courseName == null ? null : 'Course History'}">
@@ -184,5 +202,71 @@
                 <f:facet name="Bottom"/>
             </af:pageTemplate>
         </af:form>
+         <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                          contentDelivery="immediate">
+                                    <af:panelWindow id="pw1">
+                                        <af:panelBox text="Create Student" id="pb7" showDisclosure="false">
+                                            <f:facet name="toolbar"/>
+                                            <af:panelFormLayout id="pfl1">
+                                                <af:inputText label="Name" id="it8"
+                                                              binding="#{CreateStudentBean.studentName}"/>
+                        <af:inputDate label="DOB" id="id3" binding="#{CreateStudentBean.studentDOB}"/>
+                        <af:selectOneRadio label="Gender" id="sor2" layout="horizontal"
+                                           binding="#{CreateStudentBean.studentGender}">
+                            <af:selectItem label="M" value="M" id="si4"/>
+                            <af:selectItem label="F" value="F" id="si5"/>
+                        </af:selectOneRadio>
+                        <af:inputText label="GPA" id="it9" binding="#{CreateStudentBean.studentGPA}"/>
+                        <af:selectOneChoice label="Year" id="soc2" binding="#{CreateStudentBean.studentYear}">
+                            <af:selectItem label="Freshman" value="Freshman" id="si6"/>
+                            <af:selectItem label="Sophomore" value="Sophomore" id="si7"/>
+                            <af:selectItem label="Junior" value="Junior" id="si8"/>
+                            <af:selectItem label="Senior" value="Senior" id="si9"/>
+                        </af:selectOneChoice>
+                        <af:inputText label="id" id="it12" rendered="false"/>
+                                                <af:inputText label="photo" id="it13" rendered="false"/>
+                        <af:button text="Submit" id="b5" styleClass="ADFAppNavButton"
+                                   action="#{CreateStudentBean.createStudent}"/>
+                    </af:panelFormLayout>
+                                        </af:panelBox>
+                                    </af:panelWindow>
+                                </af:popup>
+        <af:popup autoCancel="disabled" id="p2" contentDelivery="immediate">
+            <af:panelWindow id="pw2">
+                <af:panelBox text="Select Student" id="pb8" showDisclosure="false"
+                             binding="#{EnrollStudentBean.studentLIstPB}">
+                    <f:facet name="toolbar"/>
+                    <af:table value="#{bindings.studentNotEnrolled.collectionModel}" var="row"
+                              rows="#{bindings.studentNotEnrolled.rangeSize}"
+                              emptyText="#{bindings.studentNotEnrolled.viewable ? 'No data to display.' : 'Access Denied.'}"
+                              rowBandingInterval="0"
+                              selectedRowKeys="#{bindings.studentNotEnrolled.collectionModel.selectedRow}"
+                              selectionListener="#{bindings.studentNotEnrolled.collectionModel.makeCurrent}"
+                              rowSelection="single" fetchSize="#{bindings.studentNotEnrolled.rangeSize}" id="t1"
+                              scrollPolicy="scroll" contentDelivery="immediate"
+                              editingMode="clickToEdit">
+                        <af:column headerText="#{bindings.studentNotEnrolled.hints.id.label}" id="c1" rendered="false"
+                                   visible="true">
+                            <af:inputText value="#{row.bindings.id.inputValue}"
+                                          label="#{bindings.studentNotEnrolled.hints.id.label}"
+                                          required="#{bindings.studentNotEnrolled.hints.id.mandatory}"
+                                          columns="#{bindings.studentNotEnrolled.hints.id.displayWidth}"
+                                          maximumLength="#{bindings.studentNotEnrolled.hints.id.precision}"
+                                          shortDesc="#{bindings.studentNotEnrolled.hints.id.tooltip}" autoSubmit="true">
+                                <f:validator binding="#{row.bindings.id.validator}"/>
+                                <af:convertNumber groupingUsed="false"
+                                                  pattern="#{bindings.studentNotEnrolled.hints.id.format}"/>
+                            </af:inputText>
+                        </af:column>
+                        <af:column headerText="Name" id="c2" width="300">
+                            <af:outputText value="#{row.name}"
+                                           shortDesc="#{bindings.studentNotEnrolled.hints.name.tooltip}" id="ot2"/>
+                        </af:column>
+                    </af:table>
+                    <af:button text="Enroll" id="b6" styleClass="ADFAppNavButton"
+                               action="#{EnrollStudentBean.enrollStudent}"/>
+                </af:panelBox>
+            </af:panelWindow>
+        </af:popup>
     </af:document>
 </f:view>

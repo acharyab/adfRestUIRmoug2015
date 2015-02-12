@@ -12,6 +12,12 @@
     <accessorIterator MasterBinding="StudentCourseVwClientIterator1" Binds="coursesByStudent" RangeSize="-1"
                       DataControl="StudentCourseVwClient" BeanClass="com.pinnacol.model.StudentCourseVw"
                       id="coursesByStudentIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="StudentClient" id="StudentClientIterator"/>
+    <accessorIterator MasterBinding="StudentClientIterator" Binds="studentNotEnrolled" RangeSize="10"
+                      DataControl="StudentClient" BeanClass="com.pinnacol.model.Student"
+                      id="studentNotEnrolledIterator"/>
+    <accessorIterator MasterBinding="StudentClientIterator" Binds="student" RangeSize="25" DataControl="StudentClient"
+                      BeanClass="com.pinnacol.model.Student" id="studentIterator"/>
   </executables>
   <bindings>
     <tree IterBinding="studentsForCourseIterator" id="studentsForCourse">
@@ -19,6 +25,8 @@
         <AttrNames>
           <Item Value="name"/>
           <Item Value="id"/>
+          <Item Value="studentId"/>
+          <Item Value="courseId"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -32,28 +40,6 @@
         <Item Value="name"/>
       </AttrNames>
     </attributeValues>
-    <attributeValues IterBinding="studentsForCourseIterator" id="dob">
-      <AttrNames>
-        <Item Value="dob"/>
-      </AttrNames>
-    </attributeValues>
-    <attributeValues IterBinding="studentsForCourseIterator" id="gender">
-      <AttrNames>
-        <Item Value="gender"/>
-      </AttrNames>
-    </attributeValues>
-    <list IterBinding="studentsForCourseIterator" id="year" DTSupportsMRU="true" SelectItemValueMode="ListObject"
-          StaticList="true">
-      <AttrNames>
-        <Item Value="year"/>
-      </AttrNames>
-      <ValueList>
-        <Item Value="Freshman"/>
-        <Item Value="Sophomore"/>
-        <Item Value="Junior"/>
-        <Item Value="Senior"/>
-      </ValueList>
-    </list>
     <attributeValues IterBinding="studentsForCourseIterator" id="gpa12">
       <AttrNames>
         <Item Value="gpa"/>
@@ -73,5 +59,42 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
+    <attributeValues IterBinding="studentsForCourseIterator" id="studentId">
+      <AttrNames>
+        <Item Value="studentId"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="studentNotEnrolledIterator" id="studentsNotEnrolled" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="courseId" NDValue="" NDType="java.lang.String"/>
+    </action>
+    <tree IterBinding="studentNotEnrolledIterator" id="studentNotEnrolled">
+      <nodeDefinition DefName="com.pinnacol.model.Student" Name="studentNotEnrolled0">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="studentIterator" id="getStudentDetails"
+            InstanceName="com.pinnacol.client.StudentClient.student" DataControl="StudentClient"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="studentId" NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="coursesByStudentIterator" id="dob1">
+      <AttrNames>
+        <Item Value="dob"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="coursesByStudentIterator" id="gender1">
+      <AttrNames>
+        <Item Value="gender"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="coursesByStudentIterator" id="year">
+      <AttrNames>
+        <Item Value="year"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

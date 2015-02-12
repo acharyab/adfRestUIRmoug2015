@@ -15,4 +15,19 @@
     <managed-bean-class>com.pinnacol.view.UiListener</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
+  <managed-bean id="__4">
+    <managed-bean-name>CreateStudentBean</managed-bean-name>
+    <managed-bean-class>com.pinnacol.view.CreateStudent</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__5">
+    <managed-bean-name>UpdateStudentBean</managed-bean-name>
+    <managed-bean-class>com.pinnacol.view.UpdateStudent</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__6">
+    <managed-bean-name>EnrollStudentBean</managed-bean-name>
+    <managed-bean-class>com.pinnacol.view.EnrollStudent</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
 </adfc-config>

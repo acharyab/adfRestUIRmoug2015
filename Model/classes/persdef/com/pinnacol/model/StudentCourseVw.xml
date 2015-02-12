@@ -10,16 +10,6 @@
     <Attr Name="_SDName" Value="com.pinnacol.model.StudentCourseVw"/>
   </DesignTime>
   <PDefAttribute
-    Name="year"
-    IsUpdateable="true">
-    <Properties>
-      <SchemaBasedProperties>
-        <CONTROLTYPE
-          Value="choice"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </PDefAttribute>
-  <PDefAttribute
     Name="completeDate"
     IsUpdateable="true">
     <Properties>
