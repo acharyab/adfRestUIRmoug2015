@@ -51,15 +51,12 @@ import oracle.jbo.ViewObject;
 
 public class UiListener {
     private RichInputText courseInputText;
-    //private RichInputText studentId;
     private RichInputText searchMsg;
     private RichPanelFormLayout studentDetailForm;
     private RichListView studentList;
     private RichPanelBox studentListPBox;
     private RichInputDate detailDOB;
-    private RichPanelBox studentDetailPB;
     private RichInputText testName;
-    //private RichOutputFormatted studntId;
 
 
     public UiListener() {
@@ -68,20 +65,19 @@ public class UiListener {
     public BindingContainer getBindings() {
         return BindingContext.getCurrent().getCurrentBindingsEntry();
     }
-    
-   private void queryStudents(String id){
-        BigDecimal courseId = new BigDecimal (id);
-        
+
+    private void queryStudents(String id) {
+        BigDecimal courseId = new BigDecimal(id);
+
         BindingContainer bindings = getBindings();
         OperationBinding operationBinding = bindings.getOperationBinding("ExecuteWithParams");
-        operationBinding.getParamsMap().put("courseId", courseId); 
-        
+        operationBinding.getParamsMap().put("courseId", courseId);
+
         Object result = operationBinding.execute();
         ADFContext.getCurrent().getViewScope().put("queriedCourseId", courseId);
         if (!operationBinding.getErrors().isEmpty()) {
             System.out.println("error executing with params");
-        }         
-       
+        }
     }
    
     private void queryCoursesByStudent(String stId){
@@ -102,8 +98,7 @@ public class UiListener {
 
     public void CourseChangeListener(ValueChangeEvent valueChangeEvent) {
         System.out.println("inside value change");
-        
-        
+               
         String displayName = (String) courseInputText.getLocalValue();
         System.out.println("display name is: " + displayName);
         
@@ -163,69 +158,7 @@ public class UiListener {
         return courseInputText;
     }
 
-  /*  public void getStudentById() {
-        
-        //resolveExpression("#{bindings.studentsForCourse.collectionModel.makeCurrent}");
-        
-        DCBindingContainer bindings1 = (DCBindingContainer)BindingContext.getCurrent().getCurrentBindingsEntry();
-        // Provide the Iterator Name
-        DCIteratorBinding iteratorBinding = (DCIteratorBinding)bindings1.get("studentsForCourseIterator");
 
-        if(iteratorBinding != null){
-        Row currentRow = iteratorBinding.getCurrentRow();
-        if(currentRow != null){
-        //Provide the attribute name
-        System.out.println("id is: " + currentRow.getAttribute("studentId"));
-        }
-       
-        BindingContainer bindings = getBindings();
-        OperationBinding operationBinding = bindings.getOperationBinding("getStudentById");
-        System.out.println("query student id is: " +  getStudentId().getLocalValue());//resolveExpression("#{row.studentId}") );
-        operationBinding.getParamsMap().put("studentId", getStudentId()); 
-        
-        Object result = operationBinding.execute();
-        if (!operationBinding.getErrors().isEmpty()) {
-            System.out.println("error executing with params");
-        } 
-    }
-    } 
-   */ 
-    
-
-
- /*   public void setStudentId(RichInputText studentId) {
-        this.studentId = studentId;
-    }
-
-    public RichInputText getStudentId() {
-        return studentId;
-    }
-
-   public void queryByStudentId(ClientEvent clientEvent) {
-        DCBindingContainer bindings1 = (DCBindingContainer)BindingContext.getCurrent().getCurrentBindingsEntry();
-        // Provide the Iterator Name
-        DCIteratorBinding iteratorBinding = (DCIteratorBinding)bindings1.get("studentsForCourseIterator");
-
-        if(iteratorBinding != null){
-        Row currentRow = iteratorBinding.getCurrentRow();
-        if(currentRow != null){
-        //Provide the attribute name
-        System.out.println("id is: " + currentRow.getAttribute("studentId"));
-        
-        
-        BindingContainer bindings = getBindings();
-        OperationBinding operationBinding = bindings.getOperationBinding("getStudentById");
-    
-        operationBinding.getParamsMap().put("studentId", currentRow.getAttribute("studentId")); 
-        
-        Object result = operationBinding.execute();
-        
-        if (!operationBinding.getErrors().isEmpty()) {
-            System.out.println("error executing with params");
-        } 
-        }
-        }
-    } */
 
     public void setSearchMsg(RichInputText searchMsg) {
         this.searchMsg = searchMsg;
@@ -246,40 +179,27 @@ public class UiListener {
     public void setStudentScoreGraph(SelectionEvent selectionEvent) {
         invokeEL("#{bindings.studentsForCourse.collectionModel.makeCurrent}", new Class[] {SelectionEvent.class}, new Object[] { selectionEvent }); 
         AdfFacesContext.getCurrentInstance().addPartialTarget(studentListPBox); 
-        
-        
-
-        
-        
+    
         DCBindingContainer bindings1 = (DCBindingContainer)BindingContext.getCurrent().getCurrentBindingsEntry();
-        // Provide the Iterator Name
         DCIteratorBinding iteratorBinding = (DCIteratorBinding)bindings1.get("studentsForCourseIterator");
 
         if(iteratorBinding != null){
         Row currentRow = iteratorBinding.getCurrentRow();
         if(currentRow != null){
-        //Provide the attribute name
         System.out.println("id is: " + currentRow.getAttribute("studentId"));
         }
             queryCoursesByStudent(currentRow.getAttribute("studentId").toString());
-            getStudentDetails(currentRow.getAttribute("studentId").toString());
-            
-        }
-
-       
+            getStudentDetails(currentRow.getAttribute("studentId").toString());           
+        }      
     }
-    
-    public static Object invokeEL(String el, Class[] paramTypes,
-    Object[] params) {
-    FacesContext facesContext = FacesContext.getCurrentInstance();
-    ELContext elContext = facesContext.getELContext();
-    ExpressionFactory expressionFactory =
-    facesContext.getApplication().getExpressionFactory();
-    MethodExpression exp =
-    expressionFactory.createMethodExpression(elContext, el,
-    Object.class, paramTypes);
 
-    return exp.invoke(elContext, params);
+    public static Object invokeEL(String el, Class[] paramTypes, Object[] params) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ELContext elContext = facesContext.getELContext();
+        ExpressionFactory expressionFactory = facesContext.getApplication().getExpressionFactory();
+        MethodExpression exp = expressionFactory.createMethodExpression(elContext, el, Object.class, paramTypes);
+
+        return exp.invoke(elContext, params);
     }
 
     public void setStudentDetailForm(RichPanelFormLayout studentDetailForm) {
@@ -305,9 +225,8 @@ public class UiListener {
     private BigDecimal getCourseId(){
         
         BigDecimal courseId = null;
-        DCBindingContainer bindings1 = (DCBindingContainer) BindingContext.getCurrent().getCurrentBindingsEntry();
         
-        
+        DCBindingContainer bindings1 = (DCBindingContainer) BindingContext.getCurrent().getCurrentBindingsEntry();              
         DCIteratorBinding iteratorBinding = (DCIteratorBinding) bindings1.get("studentsForCourseIterator");
 
         if (iteratorBinding != null) {
@@ -316,17 +235,14 @@ public class UiListener {
                 courseId = new BigDecimal(currentRow.getAttribute("courseId").toString());
                 System.out.println("Course id is: " + currentRow.getAttribute("courseId"));
             }
-            //queryCoursesByStudent(currentRow.getAttribute("studentId").toString());
         }
         
         return courseId;
     }
 
     public void deleteEnrolledStudent(ActionEvent actionEvent) {
-        System.out.println("Remove button click");
                 
                 DCBindingContainer bc = (DCBindingContainer) getBindings();
-        //        DCBindingContainer bc2 = (DCBindingContainer) BindingContext.getCurrent().getCurrentBindingsEntry();
                 DCIteratorBinding rowIter1 = bc.findIteratorBinding("studentsForCourseIterator");
                 
                
@@ -399,14 +315,6 @@ public class UiListener {
 
     public RichInputDate getDetailDOB() {
         return detailDOB;
-    }
-
-    public void setStudentDetailPB(RichPanelBox studentDetailPB) {
-        this.studentDetailPB = studentDetailPB;
-    }
-
-    public RichPanelBox getStudentDetailPB() {
-        return studentDetailPB;
     }
 
     public void setTestName(RichInputText testName) {

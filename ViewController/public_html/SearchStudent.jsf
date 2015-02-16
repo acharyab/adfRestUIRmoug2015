@@ -110,7 +110,7 @@
                                          valign="stretch" width="41%">
                                 <af:panelBox id="pb4" showDisclosure="false" background="medium"
                                              text="#{bindings.name.inputValue}"
-                                             contentDelivery="immediate" binding="#{listenerBean.studentDetailPB}">
+                                             contentDelivery="immediate">
                                     <af:panelGroupLayout id="pgl10" layout="horizontal"
                                                          inlineStyle="margin-bottom:20px;" halign="end"
                                                          rendered="#{viewScope.courseName == null ? false : true}">

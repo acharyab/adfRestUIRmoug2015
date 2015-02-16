@@ -44,19 +44,14 @@ public class UpdateStudent {
     private String studentId;
     private String studentGpa;
     private String courseId;
-    private Integer curRowKey;
 
     public UpdateStudent() {
     }
 
     public String updateStudent() {
         
-
-        getStudentInfo();
         Student student = new Student();
-
-        
-        //System.out.println("DOB is: " + studentDOB.getValue() + " id is: " + (String)studentIdList.getValue());
+        getStudentInfo();
         
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         Date studentDB =  null;
@@ -64,7 +59,6 @@ public class UpdateStudent {
             studentDB = df.parse(studentDOB.getValue().toString());
         } catch (ParseException e) {
         }
-        //df.parse(studentDOB.getValue());
         
         student.setName(studentName);
         student.setDob(studentDB);
@@ -90,7 +84,7 @@ public class UpdateStudent {
         }
 
         if (response.getStatus() == 200) {
-            queryStudents(courseId);
+            queryStudents(courseId);                       
             FacesMessage msg = new FacesMessage("Transaction Status", "Record Successfully updated for " + studentName);
 
             msg.setSeverity(FacesMessage.SEVERITY_INFO);
@@ -112,7 +106,7 @@ public class UpdateStudent {
 
         if (iteratorBinding != null) {
             Row currentRow = iteratorBinding.getCurrentRow();
-            
+           
             if (currentRow != null) {
                 
                 studentName = currentRow.getAttribute("name").toString();
@@ -134,6 +128,7 @@ public class UpdateStudent {
          
          Object result = operationBinding.execute();
          ADFContext.getCurrent().getViewScope().put("queriedCourseId", courseId);
+         
          if (!operationBinding.getErrors().isEmpty()) {
              System.out.println("error executing with params");
          }         
